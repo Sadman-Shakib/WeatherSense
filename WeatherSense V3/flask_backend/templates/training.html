@@ -1,0 +1,71 @@
+{% set active_page = 'training' %}
+{% extends "base.html" %}
+{% block title %}Training - WeatherSense{% endblock %}
+
+{% block content %}
+<header class="page-hero training-hero">
+    <div>
+        <span class="eyebrow">Model Operations</span>
+        <h1 class="page-title">Model Training</h1>
+        <p class="logs-copy">Train the weather model using saved sensor logs or a CSV file.</p>
+    </div>
+    <div class="mini-stat training-mini-stat">
+        <span>Pipeline</span>
+        <strong>Classifier + Forecast</strong>
+    </div>
+</header>
+
+<div id="train-result" class="result-stack"></div>
+
+<section class="training-grid">
+    <article class="card training-card training-card-primary">
+        <div class="training-card-header">
+            <span class="method-badge">Recommended</span>
+            <h2 class="card-title">Train From Sensor Logs</h2>
+            <p>Use the readings already saved in the Sensor Logs page.</p>
+        </div>
+        <form id="form-sqlite">
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="balanced-sqlite" checked>
+                    <span>Use balanced dataset (all rain + equal Sunny/Cloudy)</span>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-sqlite">
+                <span class="btn-icon" aria-hidden="true">*</span>
+                <span class="btn-text">Train From Sensor Logs</span>
+                <span class="btn-loading" hidden>Training...</span>
+            </button>
+        </form>
+    </article>
+
+    <article class="card training-card training-card-wide">
+        <div class="training-card-header">
+            <span class="method-badge">CSV Dataset</span>
+            <h2 class="card-title">Upload CSV Dataset</h2>
+            <p>Upload a CSV file with weather readings.</p>
+        </div>
+        <form id="form-csv" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="csv-file">CSV File</label>
+                <input type="file" id="csv-file" name="file" accept=".csv" required>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="balanced-csv" checked>
+                    <span>Use balanced dataset (all rain + equal Sunny/Cloudy)</span>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-csv">
+                <span class="btn-icon" aria-hidden="true">+</span>
+                <span class="btn-text">Upload Dataset and Train</span>
+                <span class="btn-loading" hidden>Training...</span>
+            </button>
+        </form>
+    </article>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='training.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- Base template: nav, main, blocks for title/content/scripts -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090f14">
+    <title>{% block title %}WeatherSense{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="nav" aria-label="Primary navigation">
+        <a href="/dashboard" class="nav-brand">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <span>WeatherSense</span>
+        </a>
+        <div class="nav-links">
+            <a href="/dashboard" {% if active_page == 'dashboard' %}class="active"{% endif %}>Dashboard</a>
+            <a href="/dataset" {% if active_page == 'dataset' %}class="active"{% endif %}>Sensor Logs</a>
+            <a href="/training" {% if active_page == 'training' %}class="active"{% endif %}>Training</a>
+        </div>
+    </nav>
+
+    <div class="nav-clock-shell" aria-live="polite">
+        <div class="nav-clock-card">
+            <span class="nav-clock-label">Local Date & Time</span>
+            <strong id="nav-clock-time">--:--:--</strong>
+            <span id="nav-clock-date">Loading date...</span>
+        </div>
+    </div>
+
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='clock.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

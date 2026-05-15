@@ -1,0 +1,61 @@
+{% set active_page = 'dataset' %}
+{% extends "base.html" %}
+{% block title %}Sensor Logs - WeatherSense{% endblock %}
+
+{% block content %}
+<header class="simple-page-header">
+    <h1 class="page-title">Sensor Logs</h1>
+</header>
+
+<div id="logs-action-message"></div>
+
+<section class="card data-card">
+    <div class="section-heading">
+        <div>
+            <h2 class="card-title">Last 50 Sensor Logs</h2>
+        </div>
+    </div>
+    <div id="preview-message" class="alert alert-info">Loading...</div>
+    <div class="table-wrap">
+        <table id="preview-table" hidden>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Timestamp</th>
+                    <th>Temperature (&deg;C)</th>
+                    <th>Humidity (%)</th>
+                    <th>Pressure (hPa)</th>
+                    <th>Rain</th>
+                </tr>
+            </thead>
+            <tbody id="preview-tbody"></tbody>
+        </table>
+    </div>
+</section>
+
+<section class="card dataset-management-card">
+    <div class="section-heading">
+        <div>
+            <h2 class="card-title">Dataset Management</h2>
+        </div>
+    </div>
+    <div class="card-actions dataset-actions">
+        <a href="/api/download_dataset" class="btn btn-primary" download="weather_full.csv">
+            <span class="btn-icon" aria-hidden="true">v</span>
+            Download Dataset
+        </a>
+        <a href="/api/download_dataset?balanced=1" class="btn btn-secondary" download="weather_balanced.csv">
+            <span class="btn-icon" aria-hidden="true">=</span>
+            Download Balanced Dataset
+        </a>
+        <button type="button" class="btn btn-danger" id="btn-delete-logs">
+            <span class="btn-icon" aria-hidden="true">!</span>
+            Delete Sensor Data
+        </button>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='dataset.js') }}"></script>
+{% endblock %}

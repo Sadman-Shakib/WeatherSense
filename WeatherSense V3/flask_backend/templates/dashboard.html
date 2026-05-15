@@ -1,0 +1,154 @@
+{% set active_page = 'dashboard' %}
+{% extends "base.html" %}
+{% block title %}Dashboard - WeatherSense{% endblock %}
+
+{% block content %}
+<section class="dashboard-layout">
+    <section class="weather-panel sensor-overview live-parameters" aria-labelledby="live-reading-title">
+        <div class="section-heading">
+            <div>
+                <h1 id="live-reading-title">Live Weather Parameters</h1>
+            </div>
+        </div>
+
+        <div id="readings" class="reading-grid">
+            <article class="weather-tile tile-temperature">
+                <div class="tile-topline">
+                    <span class="tile-icon icon-temperature" aria-hidden="true"></span>
+                    <span>Temperature</span>
+                </div>
+                <div class="tile-value"><span id="temp">--</span><span class="tile-unit">&deg;C</span></div>
+            </article>
+
+            <article class="weather-tile tile-humidity">
+                <div class="tile-topline">
+                    <span class="tile-icon icon-humidity" aria-hidden="true"></span>
+                    <span>Humidity</span>
+                </div>
+                <div class="tile-value"><span id="hum">--</span><span class="tile-unit">%</span></div>
+            </article>
+
+            <article class="weather-tile tile-pressure">
+                <div class="tile-topline">
+                    <span class="tile-icon icon-pressure" aria-hidden="true"></span>
+                    <span>Air Pressure</span>
+                </div>
+                <div class="tile-value"><span id="pres">--</span><span class="tile-unit">hPa</span></div>
+            </article>
+
+            <article class="weather-tile tile-rain">
+                <div class="tile-topline">
+                    <span class="tile-icon icon-rain" aria-hidden="true"></span>
+                    <span>Rain Status</span>
+                </div>
+                <div class="tile-value rain-value" id="rain">--</div>
+            </article>
+        </div>
+    </section>
+
+    <section class="weather-panel classification-panel" aria-labelledby="classification-title">
+        <div class="section-heading compact-heading">
+            <div>
+                <h2 id="classification-title">Weather Classification</h2>
+            </div>
+        </div>
+
+        <div id="classification-card" class="classification-display weather-unknown">
+            <div class="classification-mark" aria-hidden="true"></div>
+            <div class="classification-copy">
+                <span class="classification-label">Current Weather</span>
+                <strong id="classification" class="weather-badge badge badge-unknown">--</strong>
+                <p id="classification-note">Waiting for model reading.</p>
+            </div>
+        </div>
+    </section>
+</section>
+
+<section class="weather-panel forecast-panel" aria-labelledby="forecast-title">
+    <div class="section-heading">
+        <div>
+            <h2 id="forecast-title">Forecast Parameters</h2>
+        </div>
+    </div>
+
+    <div class="forecast-grid">
+        <article class="forecast-metric forecast-temperature">
+            <div class="metric-heading">
+                <span class="metric-icon icon-temperature" aria-hidden="true"></span>
+                <div>
+                    <h3>Temperature</h3>
+                    <p>&deg;C</p>
+                </div>
+            </div>
+            <div id="forecast-temperature" class="forecast-stack"></div>
+        </article>
+
+        <article class="forecast-metric forecast-humidity">
+            <div class="metric-heading">
+                <span class="metric-icon icon-humidity" aria-hidden="true"></span>
+                <div>
+                    <h3>Humidity</h3>
+                    <p>%</p>
+                </div>
+            </div>
+            <div id="forecast-humidity" class="forecast-stack"></div>
+        </article>
+
+        <article class="forecast-metric forecast-pressure">
+            <div class="metric-heading">
+                <span class="metric-icon icon-pressure" aria-hidden="true"></span>
+                <div>
+                    <h3>Air Pressure</h3>
+                    <p>hPa</p>
+                </div>
+            </div>
+            <div id="forecast-pressure" class="forecast-stack"></div>
+        </article>
+    </div>
+</section>
+
+<section class="history-section" aria-labelledby="history-title">
+    <div class="section-heading">
+        <div>
+            <h2 id="history-title">Sensor History</h2>
+        </div>
+    </div>
+
+    <div class="chart-grid">
+        <article class="chart-card chart-temperature">
+            <div class="chart-title-row">
+                <h3>Temperature</h3>
+                <span>&deg;C</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="chartTemperature"></canvas>
+            </div>
+        </article>
+
+        <article class="chart-card chart-humidity">
+            <div class="chart-title-row">
+                <h3>Humidity</h3>
+                <span>%</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="chartHumidity"></canvas>
+            </div>
+        </article>
+
+        <article class="chart-card chart-pressure">
+            <div class="chart-title-row">
+                <h3>Air Pressure</h3>
+                <span>hPa</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="chartPressure"></canvas>
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+{% endblock %}
